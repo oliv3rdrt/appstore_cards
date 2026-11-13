@@ -17,7 +17,8 @@ This app is in development and not yet ready for production use.]]></description
 	<bugs>https://github.com/oliv3rdrt/appstore_cards/issues</bugs>
 	<repository type="git">https://github.com/oliv3rdrt/appstore_cards</repository>
 	<dependencies>
-		<nextcloud min-version="31" max-version="35"/>
+		<php min-version="8.3"/>
+		<nextcloud min-version="35" max-version="36"/>
 	</dependencies>
 	<navigations>
 		<navigation>
