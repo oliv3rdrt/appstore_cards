@@ -1,24 +1,29 @@
 <?xml version="1.0"?>
 <info xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
-	<id>app_template</id>
-	<name>App Template</name>
-	<summary>An example summary</summary>
-	<description>An example description</description>
-	<version>1.0.0</version>
+	<id>appstore_cards</id>
+	<name>App Store Cards</name>
+	<summary>Rich previews and search for Nextcloud App Store links</summary>
+	<description><![CDATA[Paste a link to an app from the Nextcloud App Store into Talk, Text or any other app with link previews, and it becomes a card with the app's details. App Store apps can also be found from unified search and inserted with the Smart Picker.
+
+This app is in development and not yet ready for production use.]]></description>
+	<version>0.1.0</version>
 	<licence>AGPL-3.0-or-later</licence>
-	<author mail="example@example.com" homepage="https://example.com">Example</author>
-	<namespace>AppTemplate</namespace>
-	<category>customization</category>
-	<bugs>https://example.com/bugs</bugs>
+	<author homepage="https://github.com/oliv3rdrt">Oliver Anyanwu</author>
+	<namespace>AppStoreCards</namespace>
+	<category>integration</category>
+	<category>search</category>
+	<website>https://github.com/oliv3rdrt/appstore_cards</website>
+	<bugs>https://github.com/oliv3rdrt/appstore_cards/issues</bugs>
+	<repository type="git">https://github.com/oliv3rdrt/appstore_cards</repository>
 	<dependencies>
 		<nextcloud min-version="31" max-version="35"/>
 	</dependencies>
 	<navigations>
 		<navigation>
-			<id>app_template</id>
-			<name>App Template</name>
-			<route>app_template.page.index</route>
+			<id>appstore_cards</id>
+			<name>App Store Cards</name>
+			<route>appstore_cards.page.index</route>
 			<icon>app.svg</icon>
 			<type>link</type>
 		</navigation>

@@ -1,17 +1,16 @@
 {
-	"name": "nextcloud/app_template",
-	"description": "An example description",
+	"name": "oliv3rdrt/appstore_cards",
+	"description": "Rich previews and search for Nextcloud App Store links",
 	"license": "AGPL-3.0-or-later",
 	"authors": [
 		{
-			"name": "example",
-			"email": "example@example.com",
-			"homepage": "https://example.com"
+			"name": "Oliver Anyanwu",
+			"homepage": "https://github.com/oliv3rdrt"
 		}
 	],
 	"autoload": {
 		"psr-4": {
-			"OCA\\AppTemplate\\": "lib/"
+			"OCA\\AppStoreCards\\": "lib/"
 		}
 	},
 	"scripts": {

@@ -19,7 +19,7 @@ permissions:
 env:
   # Must match appinfo/info.xml <id> and the certificate folder name in
   # nextcloud/app-certificate-requests (not necessarily the GitHub repo name).
-  APP_NAME: app_template
+  APP_NAME: appstore_cards
 
 jobs:
   build_and_publish:
