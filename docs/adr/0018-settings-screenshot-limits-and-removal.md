@@ -13,7 +13,7 @@ ADRs 8, 9 and 12 left three details open: what admins can change, how large scre
 
 Measured on 2026-11-14, App Store screenshots are 110 to 343 kB and are all served as `application/octet-stream`. The `smallThumbnail` field is empty.
 
-Nextcloud caches resolved links on the server and tells browsers to keep them for an hour. Removing an app deletes only its files; its uninstall steps must clean up the rest.
+Nextcloud caches resolved links on the server and tells browsers to keep them for an hour. Removing an app deletes only its files; its uninstall steps must clean up the rest. Nextcloud runs uninstall steps whenever an app is disabled, not only before removal. It stores its own record of each app, such as `enabled` and `installed_version`, among the app's config keys, and needs that record to enable the app again. Enabling an app registers its background jobs again, with no last run.
 
 The Nextcloud 35 settings page removes "<app ID>_" from a form ID before saving, while the server compares the unmodified ID. A form whose ID starts with its app ID therefore never saves, and the request still succeeds.
 
@@ -21,11 +21,12 @@ The Nextcloud 35 settings page removes "<app ID>_" from a form ID before saving,
 
 - **Settings:** one admin switch, "Show screenshots on cards", on by default. The form stores a boolean through `IDeclarativeSettingsFormWithHandlers`, clears the cached links of every app when the switch changes, and shows the catalogue status in its description. The form ID is `admin`, without the app prefix.
 - **Screenshots:** at most 2 MB each, recognised from their first bytes as PNG, JPEG, GIF or WebP, never SVG. The cache keeps at most 100 MB and the daily job removes screenshots of apps that left the catalogue, then the oldest, until it is within that limit. The route answers 60 requests a minute per visitor and 120 per logged-in user.
-- **Removal:** an uninstall step deletes the catalogue rows, the cached screenshots, the app config and the refresh job. The empty table stays, because only Nextcloud may change its record of applied migrations, and a reinstall reuses it.
+- **Removal:** an uninstall step deletes the catalogue rows, the cached screenshots, the app's own config keys and the refresh job. It leaves Nextcloud's own keys alone. Removing the job means that enabling the app again refills the catalogue at the next cron run. The empty table stays, because only Nextcloud may change its record of applied migrations, and a reinstall reuses it.
 
 ## Consequences
 
 - Turning screenshots off stops the server contacting the image host straight away, while browsers may show the old card for up to an hour.
 - The screenshot cache cannot grow without bound, and a changed screenshot replaces the old one.
-- `occ app:remove` leaves no data behind apart from an empty table. `occ app:remove --keep-data` skips the uninstall step.
+- `occ app:remove` leaves nothing behind apart from an empty table and Nextcloud's own record of the app. `occ app:remove --keep-data` skips the uninstall step.
+- Disabling the app also empties the catalogue and resets the screenshot switch. Cards stop working until the next cron run after the app is enabled again, or until `occ appstore_cards:refresh`.
 - The form ID workaround is worth reporting upstream.

@@ -28,14 +28,26 @@ final class RemoveAppDataTest extends TestCase {
 		$appConfig = Server::get(IAppConfig::class);
 		$jobList = Server::get(IJobList::class);
 		$repository->replaceAll([self::entry()]);
-		$appConfig->setValueString('appstore_cards', 'catalogue_etag', '"etag"');
 		$jobList->add(RefreshCatalogueJob::class);
+		$appConfig->setValueString('appstore_cards', 'catalogue_etag', '"etag"');
+		$appConfig->setValueBool('appstore_cards', 'show_screenshots', false);
 
 		Server::get(RemoveAppData::class)->run($this->createMock(IOutput::class));
 
 		$this->assertSame(0, $repository->count());
-		$this->assertSame([], $appConfig->getKeys('appstore_cards'));
+		$this->assertFalse($appConfig->hasKey('appstore_cards', 'catalogue_etag'));
+		$this->assertFalse($appConfig->hasKey('appstore_cards', 'show_screenshots'));
 		$this->assertFalse($jobList->has(RefreshCatalogueJob::class, null));
+	}
+
+	public function testKeepsNextcloudsOwnRecordOfTheApp(): void {
+		$appConfig = Server::get(IAppConfig::class);
+
+		Server::get(RemoveAppData::class)->run($this->createMock(IOutput::class));
+
+		// Nextcloud stores these under the app's ID too, and needs them to enable the app again.
+		$this->assertNotSame('', $appConfig->getValueString('appstore_cards', 'installed_version'));
+		$this->assertSame('yes', $appConfig->getValueString('appstore_cards', 'enabled'));
 	}
 
 	private static function entry(): CatalogueEntry {
