@@ -10,7 +10,8 @@
     "stylelint": "stylelint src/**/*.vue src/**/*.scss src/**/*.css",
     "watch": "vite --mode development build --watch",
     "ts:check": "vue-tsc --noEmit",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage"
   },
   "browserslist": [
     "extends @nextcloud/browserslist-config"
@@ -26,6 +27,7 @@
     "@nextcloud/stylelint-config": "^3.2.2",
     "@nextcloud/vite-config": "^2.5.4",
     "@vitejs/plugin-vue": "^6.0.10",
+    "@vitest/coverage-v8": "^5.1.0",
     "@vue/test-utils": "^2.5.1",
     "@vue/tsconfig": "^0.9.1",
     "jsdom": "^30.1.3",

@@ -21,6 +21,8 @@
 /stylelint.config.cjs
 /tsconfig.json
 /vite.config.ts
+/vitest.config.ts
+/coverage
 /vendor-bin
 /vendor/bin
 /*.md

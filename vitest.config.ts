@@ -11,6 +11,13 @@ export default defineConfig({
 	test: {
 		environment: 'jsdom',
 		include: ['src/**/*.spec.ts'],
+		coverage: {
+			provider: 'v8',
+			include: ['src/**'],
+			reporter: ['text', 'lcov'],
+			// ADR 13: at least 80% line coverage.
+			thresholds: { lines: 80 },
+		},
 		server: {
 			deps: {
 				// Nextcloud packages ship CSS imports that Node cannot load on its own.
