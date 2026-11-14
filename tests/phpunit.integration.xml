@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  - SPDX-FileCopyrightText: 2026 Oliver Anyanwu
+  - SPDX-License-Identifier: CC0-1.0
+-->
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd" bootstrap="integration/bootstrap.php" cacheResult="false">
+	<testsuite name="integration">
+		<directory suffix="Test.php">integration</directory>
+	</testsuite>
+</phpunit>
