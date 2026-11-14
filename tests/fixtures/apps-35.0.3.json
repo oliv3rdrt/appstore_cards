@@ -1,0 +1,315 @@
+[
+	{
+		"id": "deck",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Deck",
+				"summary": "Personal planning and team project organization"
+			}
+		},
+		"releases": [
+			{
+				"version": "1.19.0-beta.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "1.19.0-beta.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "1.19.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [
+			{
+				"url": "https://usercontent.apps.nextcloud.com/aHR0cHM6Ly9kb3dubG9hZC5iaXRncmlkLm5ldC9uZXh0Y2xvdWQvZGVjay9zY3JlZW5zaG90cy8xLjAvRGVjay0xLnBuZw==",
+				"smallThumbnail": ""
+			}
+		],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 50,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	},
+	{
+		"id": "calendar",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Calendar",
+				"summary": "A Calendar app for Nextcloud"
+			}
+		},
+		"releases": [
+			{
+				"version": "6.6.5",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.4",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.3",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.0-rc.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.6.0-rc.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.5.6",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.5.5",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			},
+			{
+				"version": "6.5.4",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=32 <=35"
+			}
+		],
+		"screenshots": [
+			{
+				"url": "https://usercontent.apps.nextcloud.com/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL25leHRjbG91ZC9jYWxlbmRhci9tYWluL3NjcmVlbnNob3RzL3dlZWtfbmV3X2V2ZW50LnBuZw==",
+				"smallThumbnail": ""
+			}
+		],
+		"ratingOverall": 0.9391891891891891,
+		"ratingNumOverall": 74,
+		"lastModified": "2026-11-05T15:01:36.175881Z"
+	},
+	{
+		"id": "forms",
+		"categories": [
+			"organization",
+			"social",
+			"tools"
+		],
+		"translations": {
+			"en": {
+				"name": "Forms",
+				"summary": "📝 Simple surveys and questionnaires, self-hosted"
+			}
+		},
+		"releases": [
+			{
+				"version": "5.4.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.0-rc.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.0-alpha.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.0-alpha.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.0-alpha.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			},
+			{
+				"version": "5.4.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=33 <=35"
+			}
+		],
+		"screenshots": [
+			{
+				"url": "https://usercontent.apps.nextcloud.com/aHR0cHM6Ly9yYXcuZ2l0aHVidXNlcmNvbnRlbnQuY29tL25leHRjbG91ZC9mb3Jtcy9tYWluL3NjcmVlbnNob3RzL2Zvcm1zMS5wbmc=",
+				"smallThumbnail": ""
+			}
+		],
+		"ratingOverall": 0.9230769230769231,
+		"ratingNumOverall": 13,
+		"lastModified": "2026-11-10T08:26:20.850148Z"
+	},
+	{
+		"id": "fixture_unsorted",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Unsorted releases",
+				"summary": "Fixture app for parser edge cases"
+			}
+		},
+		"releases": [
+			{
+				"version": "1.2.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "1.10.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "2.0.0-beta.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "1.9.9",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 50,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	},
+	{
+		"id": "fixture_prerelease_only",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Pre-release only",
+				"summary": "Fixture app for parser edge cases"
+			}
+		},
+		"releases": [
+			{
+				"version": "0.1.0-alpha.1",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			},
+			{
+				"version": "0.1.0-beta.2",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 50,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	},
+	{
+		"id": "fixture_nightly_only",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Nightly only",
+				"summary": "Fixture app for parser edge cases"
+			}
+		},
+		"releases": [
+			{
+				"version": "3.0.0",
+				"isNightly": true,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 50,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	},
+	{
+		"id": "Invalid-ID",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "Invalid app ID",
+				"summary": "Fixture app for parser edge cases"
+			}
+		},
+		"releases": [
+			{
+				"version": "1.0.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 50,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	},
+	{
+		"id": "fixture_long_name",
+		"categories": [
+			"office",
+			"organization"
+		],
+		"translations": {
+			"en": {
+				"name": "NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNN",
+				"summary": "Fixture app for parser edge cases"
+			}
+		},
+		"releases": [
+			{
+				"version": "1.0.0",
+				"isNightly": false,
+				"rawPlatformVersionSpec": ">=35 <=35"
+			}
+		],
+		"screenshots": [],
+		"ratingOverall": 0.83,
+		"ratingNumOverall": 0,
+		"lastModified": "2026-11-05T15:54:19.114104Z"
+	}
+]

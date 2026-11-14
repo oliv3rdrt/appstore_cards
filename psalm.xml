@@ -18,4 +18,12 @@
 	<extraFiles>
 		<directory name="vendor"/>
 	</extraFiles>
+	<issueHandlers>
+		<PossiblyUnusedMethod>
+			<errorLevel type="suppress">
+				<!-- Nextcloud's dependency injection container calls service constructors. -->
+				<referencedMethod name="*::__construct"/>
+			</errorLevel>
+		</PossiblyUnusedMethod>
+	</issueHandlers>
 </psalm>

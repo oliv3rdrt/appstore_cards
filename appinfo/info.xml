@@ -25,6 +25,9 @@ This app is in development and not yet ready for production use.]]></description
 		<php min-version="8.3"/>
 		<nextcloud min-version="35" max-version="36"/>
 	</dependencies>
+	<commands>
+		<command>OCA\AppStoreCards\Command\RefreshCatalogue</command>
+	</commands>
 	<navigations>
 		<navigation>
 			<id>appstore_cards</id>

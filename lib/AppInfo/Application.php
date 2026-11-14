@@ -17,7 +17,6 @@ use OCP\AppFramework\Bootstrap\IRegistrationContext;
 final class Application extends App implements IBootstrap {
 	public const string APP_ID = 'appstore_cards';
 
-	/** @psalm-suppress PossiblyUnusedMethod */
 	public function __construct() {
 		parent::__construct(self::APP_ID);
 	}
