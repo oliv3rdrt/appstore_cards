@@ -5,10 +5,20 @@
 
 module.exports = {
 	extends: [
-		'@nextcloud',
+		// The Vue 3 preset also parses TypeScript in .vue files.
+		'@nextcloud/eslint-config/vue3',
 	],
 	rules: {
 		'jsdoc/require-jsdoc': 'off',
 		'vue/first-attribute-linebreak': 'off',
 	},
+	overrides: [
+		{
+			// Tests may import development-only packages such as Vitest.
+			files: ['src/**/*.spec.ts'],
+			rules: {
+				'n/no-unpublished-import': 'off',
+			},
+		},
+	],
 }
