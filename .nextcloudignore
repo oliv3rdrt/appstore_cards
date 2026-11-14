@@ -9,7 +9,6 @@
 /.nextcloudignore
 /.nvmrc
 /build
-/CODE_OF_CONDUCT.md
 /composer.*
 /node_modules
 /src
