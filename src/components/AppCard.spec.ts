@@ -50,6 +50,10 @@ describe('AppCard', () => {
 		expect(render({ platformSpec: '>=33' }).text()).toContain('Nextcloud 33 and later')
 	})
 
+	it('leaves out the Nextcloud version when the release names no lower bound', () => {
+		expect(render({ platformSpec: '*' }).text()).not.toContain('Nextcloud')
+	})
+
 	it('shows the rating and describes it in words for screen readers', () => {
 		const wrapper = render()
 

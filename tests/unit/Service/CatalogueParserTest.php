@@ -11,6 +11,7 @@ namespace OCA\AppStoreCards\Tests\Unit\Service;
 
 use OCA\AppStoreCards\Db\CatalogueEntry;
 use OCA\AppStoreCards\Service\CatalogueParser;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 final class CatalogueParserTest extends TestCase {
@@ -67,6 +68,30 @@ final class CatalogueParserTest extends TestCase {
 		$this->assertNull($this->entries['fixture_unsorted']->screenshotUrl);
 	}
 
+	public function testAcceptsAnAppWithOnlyTheRequiredFields(): void {
+		$this->assertCount(1, self::parseOne([]));
+	}
+
+	/**
+	 * @return array<string, array{array<string, mixed>}>
+	 */
+	public static function incompleteApps(): array {
+		return [
+			'no change date' => [['lastModified' => null]],
+			'unreadable change date' => [['lastModified' => 'not a date']],
+			'release without a version' => [['releases' => [['rawPlatformVersionSpec' => '>=35 <=36', 'isNightly' => false]]]],
+			'no English name' => [['translations' => ['de' => ['name' => 'Minimal']]]],
+		];
+	}
+
+	/**
+	 * @param array<string, mixed> $changes
+	 */
+	#[DataProvider('incompleteApps')]
+	public function testSkipsAppsWithMissingOrUnreadableFields(array $changes): void {
+		$this->assertSame([], self::parseOne($changes));
+	}
+
 	public function testRejectsInvalidJson(): void {
 		$this->expectException(\JsonException::class);
 		(new CatalogueParser())->parse('{not json');
@@ -75,5 +100,21 @@ final class CatalogueParserTest extends TestCase {
 	public function testRejectsJsonThatIsNotAList(): void {
 		$this->expectException(\UnexpectedValueException::class);
 		(new CatalogueParser())->parse('{"detail": "Not found"}');
+	}
+
+	/**
+	 * Parses one app that has only the fields the parser requires, with the given changes.
+	 *
+	 * @param array<string, mixed> $changes
+	 * @return list<CatalogueEntry>
+	 */
+	private static function parseOne(array $changes): array {
+		$app = array_replace([
+			'id' => 'fixture_minimal',
+			'lastModified' => '2026-11-05T15:54:19.000000Z',
+			'translations' => ['en' => ['name' => 'Minimal']],
+			'releases' => [['version' => '1.0.0', 'rawPlatformVersionSpec' => '>=35 <=36', 'isNightly' => false]],
+		], $changes);
+		return (new CatalogueParser())->parse(json_encode([$app], JSON_THROW_ON_ERROR));
 	}
 }

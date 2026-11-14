@@ -13,6 +13,7 @@ use OCA\AppStoreCards\Db\CatalogueEntry;
 use OCA\AppStoreCards\Db\CatalogueRepository;
 use OCA\AppStoreCards\Service\ScreenshotCache;
 use OCP\Files\IAppData;
+use OCP\Files\NotFoundException;
 use OCP\Files\SimpleFS\ISimpleFile;
 use OCP\Files\SimpleFS\ISimpleFolder;
 use OCP\Http\Client\IClient;
@@ -143,6 +144,29 @@ final class ScreenshotCacheTest extends TestCase {
 		$this->assertNull($this->cache->get('deck'));
 	}
 
+	public function testStoresAStreamedDownload(): void {
+		$stored = self::file(self::prefix('deck', self::URL) . '.png');
+		$this->repository->method('findByAppId')->willReturn(self::entry('deck', self::URL));
+		$this->folder->method('getDirectoryListing')->willReturn([]);
+		$this->client->method('get')->willReturn($this->response(self::stream(self::PNG)));
+		$this->folder->expects($this->once())->method('newFile')
+			->with(self::prefix('deck', self::URL) . '.png', self::PNG)
+			->willReturn($stored);
+
+		$this->assertSame($stored, $this->cache->get('deck'));
+	}
+
+	public function testStopsReadingAStreamedDownloadJustPastTheLimit(): void {
+		$stream = self::stream(self::PNG . str_repeat('x', 2 * ScreenshotCache::MAX_IMAGE_BYTES));
+		$this->repository->method('findByAppId')->willReturn(self::entry('deck', self::URL));
+		$this->folder->method('getDirectoryListing')->willReturn([]);
+		$this->client->method('get')->willReturn($this->response($stream));
+		$this->folder->expects($this->never())->method('newFile');
+
+		$this->assertNull($this->cache->get('deck'));
+		$this->assertSame(ScreenshotCache::MAX_IMAGE_BYTES + 1, ftell($stream));
+	}
+
 	public function testLogsAndGivesUpWhenTheDownloadFails(): void {
 		$this->repository->method('findByAppId')->willReturn(self::entry('deck', self::URL));
 		$this->folder->method('getDirectoryListing')->willReturn([]);
@@ -172,6 +196,40 @@ final class ScreenshotCacheTest extends TestCase {
 		$this->cache->prune();
 	}
 
+	public function testCreatesTheScreenshotFolderOnFirstUse(): void {
+		$appData = $this->createMock(IAppData::class);
+		$appData->method('getFolder')->willThrowException(new NotFoundException());
+		$appData->expects($this->once())->method('newFolder')->with('screenshots')->willReturn($this->folder);
+		$this->folder->method('getDirectoryListing')->willReturn([]);
+
+		$this->cacheWith($appData)->prune();
+	}
+
+	public function testDeletingAllScreenshotsWhenNoneWereCachedChangesNothing(): void {
+		$appData = $this->createMock(IAppData::class);
+		$appData->method('getFolder')->willThrowException(new NotFoundException());
+		$appData->expects($this->never())->method('newFolder');
+
+		$this->cacheWith($appData)->deleteAll();
+	}
+
+	private function cacheWith(IAppData $appData): ScreenshotCache {
+		return new ScreenshotCache(
+			$this->repository, $appData, $this->clientService, $this->appConfig,
+			$this->createMock(IURLGenerator::class), $this->logger,
+		);
+	}
+
+	/**
+	 * @return resource
+	 */
+	private static function stream(string $contents) {
+		$stream = fopen('php://memory', 'r+b');
+		fwrite($stream, $contents);
+		rewind($stream);
+		return $stream;
+	}
+
 	private static function prefix(string $appId, string $url): string {
 		return $appId . '-' . substr(hash('sha256', $url), 0, 16);
 	}
@@ -191,7 +249,10 @@ final class ScreenshotCacheTest extends TestCase {
 		return $file;
 	}
 
-	private function response(string $body, string $contentLength = ''): IResponse&MockObject {
+	/**
+	 * @param string|resource $body Nextcloud's client returns a stream when asked to, otherwise a string.
+	 */
+	private function response(mixed $body, string $contentLength = ''): IResponse&MockObject {
 		$response = $this->createMock(IResponse::class);
 		$response->method('getHeader')->with('Content-Length')->willReturn($contentLength);
 		$response->method('getBody')->willReturn($body);
