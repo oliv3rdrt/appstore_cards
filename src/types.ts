@@ -17,6 +17,8 @@ export interface AppCardData {
 	rating: number
 	ratingCount: number
 	lastModified: string
+	/** This server's URL for the app's screenshot, or null when there is none to show. */
+	screenshotUrl?: string | null
 }
 
 /**

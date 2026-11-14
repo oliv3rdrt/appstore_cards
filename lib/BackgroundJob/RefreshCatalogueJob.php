@@ -10,6 +10,7 @@ declare(strict_types=1);
 namespace OCA\AppStoreCards\BackgroundJob;
 
 use OCA\AppStoreCards\Service\CatalogueRefresher;
+use OCA\AppStoreCards\Service\ScreenshotCache;
 use OCP\AppFramework\Utility\ITimeFactory;
 use OCP\BackgroundJob\TimedJob;
 
@@ -22,6 +23,7 @@ final class RefreshCatalogueJob extends TimedJob {
 	public function __construct(
 		ITimeFactory $time,
 		private readonly CatalogueRefresher $refresher,
+		private readonly ScreenshotCache $screenshots,
 	) {
 		parent::__construct($time);
 		$this->setInterval(24 * 60 * 60);
@@ -32,5 +34,6 @@ final class RefreshCatalogueJob extends TimedJob {
 	#[\Override]
 	protected function run(mixed $argument): void {
 		$this->refresher->refresh();
+		$this->screenshots->prune();
 	}
 }

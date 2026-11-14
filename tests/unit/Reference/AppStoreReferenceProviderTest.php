@@ -12,6 +12,7 @@ namespace OCA\AppStoreCards\Tests\Unit\Reference;
 use OCA\AppStoreCards\Db\CatalogueEntry;
 use OCA\AppStoreCards\Db\CatalogueRepository;
 use OCA\AppStoreCards\Reference\AppStoreReferenceProvider;
+use OCA\AppStoreCards\Service\ScreenshotCache;
 use OCP\IL10N;
 use OCP\IURLGenerator;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -20,17 +21,19 @@ use PHPUnit\Framework\TestCase;
 
 final class AppStoreReferenceProviderTest extends TestCase {
 	private CatalogueRepository&MockObject $repository;
+	private ScreenshotCache&MockObject $screenshots;
 	private AppStoreReferenceProvider $provider;
 
 	protected function setUp(): void {
 		$this->repository = $this->createMock(CatalogueRepository::class);
+		$this->screenshots = $this->createMock(ScreenshotCache::class);
 		$l10n = $this->createMock(IL10N::class);
 		$l10n->method('t')->willReturnArgument(0);
 		$urlGenerator = $this->createMock(IURLGenerator::class);
 		$urlGenerator->method('imagePath')->willReturn('/apps-extra/appstore_cards/img/app-dark.svg');
 		$urlGenerator->method('getAbsoluteURL')->willReturnCallback(static fn (string $url): string => 'https://cloud.example.org' . $url);
 
-		$this->provider = new AppStoreReferenceProvider($this->repository, $l10n, $urlGenerator);
+		$this->provider = new AppStoreReferenceProvider($this->repository, $this->screenshots, $l10n, $urlGenerator);
 	}
 
 	/**
@@ -78,7 +81,20 @@ final class AppStoreReferenceProviderTest extends TestCase {
 			'rating' => 0.83,
 			'ratingCount' => 50,
 			'lastModified' => '2026-11-05T15:54:19+00:00',
+			'screenshotUrl' => null,
 		], $reference->getRichObject());
+		$this->assertNull($reference->getImageUrl());
+	}
+
+	public function testPointsTheCardImageAtThisServersScreenshotRoute(): void {
+		$deck = self::deck();
+		$this->repository->method('findByAppId')->willReturn($deck);
+		$this->screenshots->method('urlFor')->with($deck)->willReturn('https://cloud.example.org/apps/appstore_cards/screenshots/deck');
+
+		$reference = $this->provider->resolveReference('https://apps.nextcloud.com/apps/deck');
+
+		$this->assertSame('https://cloud.example.org/apps/appstore_cards/screenshots/deck', $reference?->getImageUrl());
+		$this->assertSame('https://cloud.example.org/apps/appstore_cards/screenshots/deck', $reference->getRichObject()['screenshotUrl']);
 	}
 
 	public function testLeavesUnknownAppsToTheGenericPreview(): void {

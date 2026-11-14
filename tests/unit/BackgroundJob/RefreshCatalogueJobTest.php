@@ -12,6 +12,7 @@ namespace OCA\AppStoreCards\Tests\Unit\BackgroundJob;
 use OCA\AppStoreCards\BackgroundJob\RefreshCatalogueJob;
 use OCA\AppStoreCards\Service\CatalogueRefresher;
 use OCA\AppStoreCards\Service\RefreshResult;
+use OCA\AppStoreCards\Service\ScreenshotCache;
 use OCP\AppFramework\Utility\ITimeFactory;
 use PHPUnit\Framework\TestCase;
 
@@ -20,18 +21,29 @@ final class RefreshCatalogueJobTest extends TestCase {
 		$job = new RefreshCatalogueJob(
 			$this->createMock(ITimeFactory::class),
 			$this->createMock(CatalogueRefresher::class),
+			$this->createMock(ScreenshotCache::class),
 		);
 
 		$this->assertSame(86400, $job->getInterval());
 		$this->assertFalse($job->isTimeSensitive());
 	}
 
-	public function testRefreshesTheCatalogue(): void {
+	public function testRefreshesTheCatalogueThenPrunesScreenshots(): void {
+		$calls = [];
 		$refresher = $this->createMock(CatalogueRefresher::class);
-		$refresher->expects($this->once())->method('refresh')->willReturn(RefreshResult::Updated);
-		$job = new RefreshCatalogueJob($this->createMock(ITimeFactory::class), $refresher);
+		$refresher->expects($this->once())->method('refresh')->willReturnCallback(static function () use (&$calls): RefreshResult {
+			$calls[] = 'refresh';
+			return RefreshResult::Updated;
+		});
+		$screenshots = $this->createMock(ScreenshotCache::class);
+		$screenshots->expects($this->once())->method('prune')->willReturnCallback(static function () use (&$calls): void {
+			$calls[] = 'prune';
+		});
+		$job = new RefreshCatalogueJob($this->createMock(ITimeFactory::class), $refresher, $screenshots);
 
 		// run() is what Nextcloud calls when the job is due.
 		(fn () => $this->run(null))->call($job);
+
+		$this->assertSame(['refresh', 'prune'], $calls);
 	}
 }

@@ -12,6 +12,7 @@ namespace OCA\AppStoreCards\Reference;
 use OCA\AppStoreCards\AppInfo\Application;
 use OCA\AppStoreCards\Db\CatalogueRepository;
 use OCA\AppStoreCards\Search\AppStoreSearchProvider;
+use OCA\AppStoreCards\Service\ScreenshotCache;
 use OCP\Collaboration\Reference\ADiscoverableReferenceProvider;
 use OCP\Collaboration\Reference\IPublicReferenceProvider;
 use OCP\Collaboration\Reference\IReference;
@@ -30,6 +31,7 @@ final class AppStoreReferenceProvider extends ADiscoverableReferenceProvider imp
 
 	public function __construct(
 		private readonly CatalogueRepository $repository,
+		private readonly ScreenshotCache $screenshots,
 		private readonly IL10N $l10n,
 		private readonly IURLGenerator $urlGenerator,
 	) {
@@ -81,6 +83,8 @@ final class AppStoreReferenceProvider extends ADiscoverableReferenceProvider imp
 		$reference->setUrl($entry->storeUrl());
 		$reference->setTitle($entry->name);
 		$reference->setDescription($entry->summary);
+		$screenshotUrl = $this->screenshots->urlFor($entry);
+		$reference->setImageUrl($screenshotUrl);
 		$reference->setRichObject(self::RICH_OBJECT_TYPE, [
 			'appId' => $entry->appId,
 			'name' => $entry->name,
@@ -92,6 +96,7 @@ final class AppStoreReferenceProvider extends ADiscoverableReferenceProvider imp
 			'rating' => $entry->rating,
 			'ratingCount' => $entry->ratingCount,
 			'lastModified' => $entry->lastModified->format(\DateTimeInterface::ATOM),
+			'screenshotUrl' => $screenshotUrl,
 		]);
 
 		return $reference;

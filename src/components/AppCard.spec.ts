@@ -74,6 +74,22 @@ describe('AppCard', () => {
 		expect(categories.findAll('[role="listitem"]').map((item) => item.text())).toEqual(['Office & text', 'Flow', 'new_category'])
 	})
 
+	it('shows the screenshot from this server with alt text, lazily', () => {
+		const image = render({ screenshotUrl: 'https://cloud.example.org/apps/appstore_cards/screenshots/deck' }).get('img')
+
+		expect(image.attributes('src')).toBe('https://cloud.example.org/apps/appstore_cards/screenshots/deck')
+		expect(image.attributes('alt')).toBe('Screenshot of Deck')
+		expect(image.attributes('loading')).toBe('lazy')
+	})
+
+	it('shows no image when there is no screenshot or it fails to load', async () => {
+		expect(render({ screenshotUrl: null }).find('img').exists()).toBe(false)
+
+		const wrapper = render({ screenshotUrl: 'https://cloud.example.org/apps/appstore_cards/screenshots/deck' })
+		await wrapper.get('img').trigger('error')
+		expect(wrapper.find('img').exists()).toBe(false)
+	})
+
 	it('leaves out the categories list when there are none', () => {
 		expect(render({ categories: [] }).find('[role="list"][aria-label="Categories"]').exists()).toBe(false)
 	})

@@ -6,7 +6,7 @@
 import type { AppCardData } from '../types.ts'
 
 import { getCanonicalLocale, n, t } from '@nextcloud/l10n'
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { categoryLabel } from '../categories.ts'
 import { majorVersionRange } from '../compatibility.ts'
 
@@ -46,10 +46,19 @@ const ratingDescription = computed(() => n(
 ))
 
 const categories = computed(() => props.app.categories.map(categoryLabel))
+
+/** A missing or broken screenshot leaves the card without an image rather than a broken one. */
+const screenshotFailed = ref(false)
 </script>
 
 <template>
 	<article :class="$style.card">
+		<img v-if="app.screenshotUrl && !screenshotFailed"
+			:class="$style.screenshot"
+			:src="app.screenshotUrl"
+			:alt="t('appstore_cards', 'Screenshot of {app}', { app: app.name })"
+			loading="lazy"
+			@error="screenshotFailed = true">
 		<a :class="$style.name"
 			:href="app.url"
 			target="_blank"
@@ -133,6 +142,15 @@ const categories = computed(() => props.app.categories.map(categoryLabel))
 
 .name:focus-visible {
 	outline: none;
+}
+
+.screenshot {
+	display: block;
+	width: 100%;
+	max-height: 160px;
+	object-fit: cover;
+	object-position: top;
+	border-radius: var(--border-radius);
 }
 
 .summary {
