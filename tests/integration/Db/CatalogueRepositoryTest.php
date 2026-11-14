@@ -69,11 +69,63 @@ final class CatalogueRepositoryTest extends TestCase {
 		$this->assertSame('Deck', $this->repository->findOneBy(['appId' => 'deck'])->name);
 	}
 
-	private static function entry(string $appId, ?string $screenshotUrl = 'https://usercontent.apps.nextcloud.com/example'): CatalogueEntry {
+	public function testFindsAnAppById(): void {
+		$this->repository->replaceAll([self::entry('deck')]);
+
+		$this->assertSame('Deck', $this->repository->findByAppId('deck')?->name);
+		$this->assertNull($this->repository->findByAppId('unknown'));
+	}
+
+	public function testSearchIgnoresCaseInNamesAndSummaries(): void {
+		$this->repository->replaceAll([
+			self::entry('deck', summary: 'Kanban boards'),
+			self::entry('forms', summary: 'Surveys and questionnaires'),
+		]);
+
+		$this->assertSame(['deck'], self::ids($this->repository->search('DECK', 10)));
+		$this->assertSame(['deck'], self::ids($this->repository->search('kanban', 10)));
+		$this->assertSame([], self::ids($this->repository->search('calendar', 10)));
+	}
+
+	public function testSearchTreatsLikeWildcardsAsPlainText(): void {
+		$this->repository->replaceAll([
+			self::entry('percent', summary: 'Shows 100% of your files'),
+			self::entry('underscore', summary: 'Uses snake_case names'),
+			self::entry('plain', summary: 'Shows 1000 files in snakeXcase'),
+		]);
+
+		$this->assertSame(['percent'], self::ids($this->repository->search('100%', 10)));
+		$this->assertSame(['underscore'], self::ids($this->repository->search('snake_case', 10)));
+	}
+
+	public function testSearchPagesThroughResultsInNameOrder(): void {
+		$this->repository->replaceAll([
+			self::entry('cherry', summary: 'Fruit'),
+			self::entry('apple', summary: 'Fruit'),
+			self::entry('banana', summary: 'Fruit'),
+		]);
+
+		$this->assertSame(['apple', 'banana'], self::ids($this->repository->search('fruit', 2)));
+		$this->assertSame(['cherry'], self::ids($this->repository->search('fruit', 2, 2)));
+	}
+
+	/**
+	 * @param list<CatalogueEntry> $entries
+	 * @return list<string>
+	 */
+	private static function ids(array $entries): array {
+		return array_map(static fn (CatalogueEntry $entry): string => $entry->appId, $entries);
+	}
+
+	private static function entry(
+		string $appId,
+		?string $screenshotUrl = 'https://usercontent.apps.nextcloud.com/example',
+		?string $summary = null,
+	): CatalogueEntry {
 		$entry = new CatalogueEntry();
 		$entry->appId = $appId;
 		$entry->name = ucfirst($appId);
-		$entry->summary = 'Summary of ' . $appId;
+		$entry->summary = $summary ?? 'Summary of ' . $appId;
 		$entry->latestVersion = '1.19.0';
 		$entry->platformSpec = '>=35 <=35';
 		$entry->categories = ['office', 'organization'];

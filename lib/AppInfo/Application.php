@@ -9,6 +9,8 @@ declare(strict_types=1);
 
 namespace OCA\AppStoreCards\AppInfo;
 
+use OCA\AppStoreCards\Reference\AppStoreReferenceProvider;
+use OCA\AppStoreCards\Search\AppStoreSearchProvider;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -23,6 +25,8 @@ final class Application extends App implements IBootstrap {
 
 	#[\Override]
 	public function register(IRegistrationContext $context): void {
+		$context->registerReferenceProvider(AppStoreReferenceProvider::class);
+		$context->registerSearchProvider(AppStoreSearchProvider::class);
 	}
 
 	#[\Override]

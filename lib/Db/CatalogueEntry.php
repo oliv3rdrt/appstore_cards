@@ -60,4 +60,9 @@ final class CatalogueEntry {
 
 	#[Column(name: 'last_modified', type: ColumnType::DatetimeImmutable)]
 	public \DateTimeImmutable $lastModified;
+
+	/** The app's page on the App Store, in the form the reference provider recognises. */
+	public function storeUrl(): string {
+		return 'https://apps.nextcloud.com/apps/' . $this->appId;
+	}
 }
