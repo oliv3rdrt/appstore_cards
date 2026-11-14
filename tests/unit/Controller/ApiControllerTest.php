@@ -7,14 +7,14 @@ declare(strict_types=1);
  * SPDX-License-Identifier: AGPL-3.0-or-later
  */
 
-namespace Controller;
+namespace OCA\AppStoreCards\Tests\Unit\Controller;
 
 use OCA\AppStoreCards\AppInfo\Application;
 use OCA\AppStoreCards\Controller\ApiController;
 use OCP\IRequest;
 use PHPUnit\Framework\TestCase;
 
-final class ApiTest extends TestCase {
+final class ApiControllerTest extends TestCase {
 	public function testIndex(): void {
 		$request = $this->createMock(IRequest::class);
 		$controller = new ApiController(Application::APP_ID, $request);
