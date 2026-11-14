@@ -11,12 +11,6 @@ SPDX-FileCopyrightText = "2024 Nextcloud GmbH and Nextcloud contributors"
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
 [[annotations]]
-path = "openapi.json"
-precedence = "aggregate"
-SPDX-FileCopyrightText = "2024 Nextcloud GmbH and Nextcloud contributors"
-SPDX-License-Identifier = "AGPL-3.0-or-later"
-
-[[annotations]]
 path = "tests/fixtures/**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = ["Authors of the Deck, Calendar and Forms apps, as published on apps.nextcloud.com", "2026 Oliver Anyanwu"]

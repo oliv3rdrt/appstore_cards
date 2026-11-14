@@ -24,4 +24,5 @@ Most data reaches the frontend through Nextcloud's own interfaces: previews thro
 ## Consequences
 
 - Version 0.1.0 may need no OCS endpoint at all. This decision sets the rule for any that are added.
+- Version 0.1.0 has no OCS endpoint, and the OpenAPI generator stops when an app has no routes, so the OpenAPI tooling and its CI check come back with the first OCS endpoint.
 - Every endpoint's access rules are visible on the method and in the OpenAPI file.

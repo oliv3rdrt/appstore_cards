@@ -28,13 +28,4 @@ This app is in development and not yet ready for production use.]]></description
 	<commands>
 		<command>OCA\AppStoreCards\Command\RefreshCatalogue</command>
 	</commands>
-	<navigations>
-		<navigation>
-			<id>appstore_cards</id>
-			<name>App Store Cards</name>
-			<route>appstore_cards.page.index</route>
-			<icon>app.svg</icon>
-			<type>link</type>
-		</navigation>
-	</navigations>
 </info>
