@@ -26,3 +26,4 @@ Nextcloud's AI Contribution Policy expects a feature to be tested in every place
 - Cards look the same for logged-in users and for visitors.
 - The anonymous route needs rate limits, tests and a documented limit on cache size.
 - End-to-end tests must cover a public share.
+- Nextcloud 35 passes the share token to the provider without checking it, and its own `LinkReferenceProvider` ignores it. Because cards only show public catalogue data, this provider ignores it too, rather than adding a share lookup for every card.
