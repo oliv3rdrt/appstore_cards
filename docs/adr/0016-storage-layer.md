@@ -30,3 +30,4 @@ The app supports Nextcloud 35 only.
 - Entities are plain, typed objects that are easy to read and to build in tests.
 - The repository is tested against real databases, and the code that uses it is tested with a mock.
 - When questions come up, the server's own apps are the reference, and anything learned can feed back into the documentation.
+- In Nextcloud 35 the ORM treats a single `#[Id]` property without a generator as an autoincrement column and leaves it out of inserts. The table therefore has a numeric `id` primary key and a unique index on `app_id`, instead of using the app ID as the key.

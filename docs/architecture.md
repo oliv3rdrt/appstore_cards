@@ -23,10 +23,10 @@ flowchart LR
         refprov["AppStoreReferenceProvider"]
         searchprov["AppStoreSearchProvider"]
         shots["ScreenshotController"]
-        catalogue["CatalogueService"]
+        catalogue["CatalogueRepository"]
         refresher["CatalogueRefresher"]
         job["Daily refresh job"]
-        command["occ refresh command"]
+        command["occ appstore_cards:refresh"]
         settings["Admin settings"]
         table[("Catalogue table")]
         config[("App config")]
@@ -48,7 +48,7 @@ flowchart LR
     job --> refresher
     command --> refresher
     refresher -- "If-None-Match" --> store
-    refresher --> table
+    refresher --> catalogue
     refresher --> config
     settings --> config
 ```
@@ -62,10 +62,11 @@ flowchart LR
 | `LoadReferenceWidget` | `RenderReferenceEvent` listener | Loads the widget script only on pages that may show previews. |
 | AppCard widget | `registerWidget()` from `@nextcloud/vue` | Renders the card in Vue 3 from the rich object. |
 | `ScreenshotController` | `Controller` returning an image | Serves an app's screenshot by app ID, for logged-in users and public share visitors, with rate limits. |
-| `CatalogueService` | `IDBConnection` | Reads apps by ID and searches by name and summary. |
-| `CatalogueRefresher` | `IClientService`, `IAppConfig` | Downloads the catalogue with the stored ETag, parses it and updates the table. |
+| `CatalogueRepository` | ORM `Repository` | Reads apps by ID, searches by name and summary, and replaces the catalogue in one transaction. |
+| `CatalogueRefresher` | `IClientService`, `IAppConfig`, `IConfig` | Downloads the catalogue with the stored ETag and hands it to the parser and repository. |
+| `CatalogueParser` | | Turns the App Store's JSON into entries: highest stable release first, invalid apps skipped. |
 | Refresh job | `TimedJob` | Runs the refresher every 24 hours, time-insensitive and never in parallel. |
-| Refresh command | `#[AsCommand]` | Runs the refresher on demand with `occ`. |
+| Refresh command | `#[AsCommand]` | Runs the refresher on demand with `occ appstore_cards:refresh`. |
 | Admin settings | `IDeclarativeSettingsForm` | Admin-only options, stored in app config. |
 | Uninstall step | `IRepairStep` | Removes the table's data, the app config and the screenshot cache. |
 
@@ -121,6 +122,5 @@ Nothing else leaves the server. Browsers only talk to the Nextcloud instance.
 
 ## Open questions for implementation
 
-- The exact columns and indexes of the catalogue table, and whether to use `QBMapper` or Nextcloud 35's typed query builder or ORM.
 - The fields of the admin settings form.
 - The size limits for single screenshots and for the whole cache.
