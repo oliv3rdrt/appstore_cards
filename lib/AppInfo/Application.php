@@ -9,12 +9,14 @@ declare(strict_types=1);
 
 namespace OCA\AppStoreCards\AppInfo;
 
+use OCA\AppStoreCards\Listener\LoadReferenceWidget;
 use OCA\AppStoreCards\Reference\AppStoreReferenceProvider;
 use OCA\AppStoreCards\Search\AppStoreSearchProvider;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
 use OCP\AppFramework\Bootstrap\IRegistrationContext;
+use OCP\Collaboration\Reference\RenderReferenceEvent;
 
 final class Application extends App implements IBootstrap {
 	public const string APP_ID = 'appstore_cards';
@@ -27,6 +29,7 @@ final class Application extends App implements IBootstrap {
 	public function register(IRegistrationContext $context): void {
 		$context->registerReferenceProvider(AppStoreReferenceProvider::class);
 		$context->registerSearchProvider(AppStoreSearchProvider::class);
+		$context->registerEventListener(RenderReferenceEvent::class, LoadReferenceWidget::class);
 	}
 
 	#[\Override]
