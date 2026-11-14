@@ -28,6 +28,11 @@ This app is in development and not yet ready for production use.]]></description
 	<background-jobs>
 		<job>OCA\AppStoreCards\BackgroundJob\RefreshCatalogueJob</job>
 	</background-jobs>
+	<repair-steps>
+		<uninstall>
+			<step>OCA\AppStoreCards\Migration\RemoveAppData</step>
+		</uninstall>
+	</repair-steps>
 	<commands>
 		<command>OCA\AppStoreCards\Command\RefreshCatalogue</command>
 	</commands>

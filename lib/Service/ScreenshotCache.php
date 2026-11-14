@@ -126,6 +126,13 @@ class ScreenshotCache {
 		}
 	}
 
+	public function deleteAll(): void {
+		try {
+			$this->appData->getFolder(self::FOLDER)->delete();
+		} catch (NotFoundException) {
+		}
+	}
+
 	/**
 	 * Only the App Store's own image host over HTTPS, so the server never fetches other addresses.
 	 */
