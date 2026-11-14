@@ -12,6 +12,7 @@ namespace OCA\AppStoreCards\AppInfo;
 use OCA\AppStoreCards\Listener\LoadReferenceWidget;
 use OCA\AppStoreCards\Reference\AppStoreReferenceProvider;
 use OCA\AppStoreCards\Search\AppStoreSearchProvider;
+use OCA\AppStoreCards\Settings\AdminSettings;
 use OCP\AppFramework\App;
 use OCP\AppFramework\Bootstrap\IBootContext;
 use OCP\AppFramework\Bootstrap\IBootstrap;
@@ -30,6 +31,7 @@ final class Application extends App implements IBootstrap {
 		$context->registerReferenceProvider(AppStoreReferenceProvider::class);
 		$context->registerSearchProvider(AppStoreSearchProvider::class);
 		$context->registerEventListener(RenderReferenceEvent::class, LoadReferenceWidget::class);
+		$context->registerDeclarativeSettings(AdminSettings::class);
 	}
 
 	#[\Override]
