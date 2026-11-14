@@ -7,4 +7,14 @@
 	<testsuite name="integration">
 		<directory suffix="Test.php">integration</directory>
 	</testsuite>
+	<source>
+		<include>
+			<directory suffix=".php">../lib</directory>
+		</include>
+		<!-- ADR 13: the bootstrap class and schema migrations are left out of the coverage target. -->
+		<exclude>
+			<file>../lib/AppInfo/Application.php</file>
+			<directory prefix="Version" suffix=".php">../lib/Migration</directory>
+		</exclude>
+	</source>
 </phpunit>
