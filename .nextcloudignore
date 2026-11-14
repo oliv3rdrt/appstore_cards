@@ -22,7 +22,9 @@
 /tsconfig.json
 /vite.config.ts
 /vitest.config.ts
+/playwright.config.ts
 /coverage
+/playwright-report
 /vendor-bin
 /vendor/bin
 /*.md

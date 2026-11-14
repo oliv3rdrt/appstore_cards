@@ -12,3 +12,5 @@
 /css/
 /build/
 /coverage/
+/playwright-report/
+/tests/playwright/results/

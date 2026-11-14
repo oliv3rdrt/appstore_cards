@@ -14,8 +14,8 @@ module.exports = {
 	},
 	overrides: [
 		{
-			// Tests may import development-only packages such as Vitest.
-			files: ['src/**/*.spec.ts'],
+			// Tests may import development-only packages such as Vitest and Playwright.
+			files: ['src/**/*.spec.ts', 'tests/playwright/**', 'playwright.config.ts'],
 			rules: {
 				'n/no-unpublished-import': 'off',
 			},
