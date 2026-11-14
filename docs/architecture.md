@@ -6,7 +6,7 @@
 
 App Store Cards keeps a slim local copy of the Nextcloud App Store catalogue and uses it to turn App Store links into rich cards, and to find apps from unified search and the Smart Picker. Every user-facing request is answered from the local copy. Only a daily background job and the screenshot cache talk to the App Store.
 
-The decisions behind this design are recorded in [docs/adr](adr/).
+The decisions behind this design are recorded in [docs/adr](adr/), and [docs/testing.md](testing.md) explains how it is tested.
 
 ## Overview
 
