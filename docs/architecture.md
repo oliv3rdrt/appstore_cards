@@ -68,7 +68,7 @@ flowchart LR
 | Refresh job | `TimedJob` | Runs the refresher every 24 hours, time-insensitive and never in parallel. |
 | Refresh command | `#[AsCommand]` | Runs the refresher on demand with `occ appstore_cards:refresh`. |
 | Admin settings | `IDeclarativeSettingsForm` | Admin-only options, stored in app config. |
-| Uninstall step | `IRepairStep` | Removes the table's data, the app config and the screenshot cache. |
+| Uninstall step | `IRepairStep` | Removes the table's data, the app config, the screenshot cache and the refresh job. |
 
 ## Main flows
 
@@ -120,7 +120,4 @@ Nothing else leaves the server. Browsers only talk to the Nextcloud instance.
 - The schema is created and changed by migrations, which must work for upgrades and downgrades.
 - `occ app:remove` runs the uninstall step. `--keep-data` keeps the data.
 
-## Open questions for implementation
-
-- The fields of the admin settings form.
-- The size limits for single screenshots and for the whole cache.
+Settings, screenshot limits and removal are described in [ADR 18](adr/0018-settings-screenshot-limits-and-removal.md).
