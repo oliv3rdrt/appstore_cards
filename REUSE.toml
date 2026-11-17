@@ -18,7 +18,7 @@ SPDX-FileCopyrightText = ["Authors of the Deck, Calendar and Forms apps, as publ
 SPDX-License-Identifier = "AGPL-3.0-or-later"
 
 [[annotations]]
-path = [".gitignore", ".nextcloudignore", ".nvmrc", ".github/dependabot.yml", "composer.json", "composer.lock", "package.json", "package-lock.json", "psalm.xml", "tests/phpunit.xml", "tests/playwright/tsconfig.json", "tsconfig.json", "vendor-bin/**/composer.json", "vendor-bin/**/composer.lock"]
+path = [".gitignore", ".nextcloudignore", ".nvmrc", ".github/dependabot.yml", ".github/pull_request_template.md", "composer.json", "composer.lock", "package.json", "package-lock.json", "psalm.xml", "tests/phpunit.xml", "tests/playwright/tsconfig.json", "tsconfig.json", "vendor-bin/**/composer.json", "vendor-bin/**/composer.lock"]
 precedence = "aggregate"
 SPDX-FileCopyrightText = "none"
 SPDX-License-Identifier = "CC0-1.0"

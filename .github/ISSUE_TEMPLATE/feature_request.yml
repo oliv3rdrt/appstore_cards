@@ -1,0 +1,23 @@
+# SPDX-FileCopyrightText: 2026 Oliver Anyanwu
+# SPDX-License-Identifier: AGPL-3.0-or-later
+name: Feature request
+description: An idea to make the app more useful.
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would it solve?
+      description: Who runs into it, and when?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like to happen?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: What have you tried instead?
