@@ -1,5 +1,17 @@
 version: 2
 updates:
+  # Actions are pinned to commits, so Dependabot keeps the pins and their version comments
+  # current. One grouped pull request per week, checked by CI like any other change.
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: saturday
+      time: "03:00"
+      timezone: Europe/Paris
+    groups:
+      github-actions:
+        patterns: ["*"]
   - package-ecosystem: composer
     directories:
       - "/"
