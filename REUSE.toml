@@ -5,10 +5,11 @@ SPDX-PackageName = "appstore_cards"
 SPDX-PackageDownloadLocation = "https://github.com/oliv3rdrt/appstore_cards"
 
 [[annotations]]
+# The "card-search-outline" icon from Material Design Icons (@mdi/svg 7.4.47).
 path = ["img/app.svg", "img/app-dark.svg"]
 precedence = "aggregate"
-SPDX-FileCopyrightText = "2024 Nextcloud GmbH and Nextcloud contributors"
-SPDX-License-Identifier = "AGPL-3.0-or-later"
+SPDX-FileCopyrightText = "Pictogrammers and the Material Design Icons contributors"
+SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
 path = "tests/fixtures/**"
