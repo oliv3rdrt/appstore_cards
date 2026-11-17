@@ -27,4 +27,7 @@
 /playwright-report
 /vendor-bin
 /vendor/bin
+/docs
+# The App Store reads the release notes from CHANGELOG.md inside the archive.
 /*.md
+!/CHANGELOG.md
