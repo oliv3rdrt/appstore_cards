@@ -90,7 +90,9 @@ jobs:
           coverage: ${{ matrix.coverage && 'pcov' || 'none' }}
           ini-file: development
           # Temporary workaround for missing pcntl_* in PHP 8.3
-          ini-values: disable_functions=
+          # PCOV only records files under pcov.directory. Unset, it picks src/ before lib/,
+          # and this app's src/ holds the Vue code, so it has to point at lib/.
+          ini-values: disable_functions=, pcov.directory=${{ github.workspace }}/apps/${{ env.APP_NAME }}/lib
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
