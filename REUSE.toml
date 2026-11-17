@@ -12,6 +12,13 @@ SPDX-FileCopyrightText = "Pictogrammers and the Material Design Icons contributo
 SPDX-License-Identifier = "Apache-2.0"
 
 [[annotations]]
+# Screenshots of Nextcloud with this app, showing other apps' App Store screenshots inside the cards.
+path = "docs/screenshots/**"
+precedence = "aggregate"
+SPDX-FileCopyrightText = ["2026 Oliver Anyanwu", "Nextcloud GmbH and Nextcloud contributors"]
+SPDX-License-Identifier = "AGPL-3.0-or-later"
+
+[[annotations]]
 path = "tests/fixtures/**"
 precedence = "aggregate"
 SPDX-FileCopyrightText = ["Authors of the Deck, Calendar and Forms apps, as published on apps.nextcloud.com", "2026 Oliver Anyanwu"]
