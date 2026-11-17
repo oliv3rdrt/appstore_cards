@@ -23,21 +23,33 @@ use PHPUnit\Framework\TestCase;
  * Runs the uninstall step against the real database. Afterwards, the next refresh refills the catalogue.
  */
 final class RemoveAppDataTest extends TestCase {
-	public function testLeavesNoCatalogueSettingsOrJobBehind(): void {
+	public function testLeavesNoCatalogueOrJobBehind(): void {
 		$repository = Server::get(CatalogueRepository::class);
 		$appConfig = Server::get(IAppConfig::class);
 		$jobList = Server::get(IJobList::class);
 		$repository->replaceAll([self::entry()]);
 		$jobList->add(RefreshCatalogueJob::class);
 		$appConfig->setValueString('appstore_cards', 'catalogue_etag', '"etag"');
-		$appConfig->setValueBool('appstore_cards', 'show_screenshots', false);
 
 		Server::get(RemoveAppData::class)->run($this->createMock(IOutput::class));
 
 		$this->assertSame(0, $repository->count());
 		$this->assertFalse($appConfig->hasKey('appstore_cards', 'catalogue_etag'));
-		$this->assertFalse($appConfig->hasKey('appstore_cards', 'show_screenshots'));
 		$this->assertFalse($jobList->has(RefreshCatalogueJob::class, null));
+	}
+
+	public function testKeepsTheAdminsScreenshotChoice(): void {
+		$appConfig = Server::get(IAppConfig::class);
+		$appConfig->setValueBool('appstore_cards', 'show_screenshots', false);
+
+		try {
+			Server::get(RemoveAppData::class)->run($this->createMock(IOutput::class));
+
+			// Disabling and enabling the app again must not turn screenshots back on.
+			$this->assertFalse($appConfig->getValueBool('appstore_cards', 'show_screenshots', true));
+		} finally {
+			$appConfig->deleteKey('appstore_cards', 'show_screenshots');
+		}
 	}
 
 	public function testKeepsNextcloudsOwnRecordOfTheApp(): void {

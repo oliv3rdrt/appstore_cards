@@ -68,7 +68,7 @@ flowchart LR
 | Refresh job | `TimedJob` | Runs the refresher every 24 hours, time-insensitive and never in parallel. |
 | Refresh command | `#[AsCommand]` | Runs the refresher on demand with `occ appstore_cards:refresh`. |
 | Admin settings | `IDeclarativeSettingsForm` | Admin-only options, stored in app config. |
-| Uninstall step | `IRepairStep` | Removes the table's data, the app's own config keys, the screenshot cache and the refresh job. Nextcloud also runs it when the app is disabled. |
+| Uninstall step | `IRepairStep` | Removes the table's data, the catalogue's config keys, the screenshot cache and the refresh job, and keeps the screenshot switch. Nextcloud also runs it when the app is disabled. |
 
 ## Main flows
 

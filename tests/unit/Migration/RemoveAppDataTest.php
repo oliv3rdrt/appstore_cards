@@ -19,7 +19,7 @@ use OCP\Migration\IOutput;
 use PHPUnit\Framework\TestCase;
 
 final class RemoveAppDataTest extends TestCase {
-	public function testRemovesTheCatalogueScreenshotsJobAndOnlyThisAppsOwnSettings(): void {
+	public function testRemovesTheCatalogueScreenshotsJobAndOnlyTheCatalogueSettings(): void {
 		$repository = $this->createMock(CatalogueRepository::class);
 		$repository->expects($this->once())->method('deleteBy')->with([]);
 		$screenshots = $this->createMock(ScreenshotCache::class);
@@ -36,10 +36,10 @@ final class RemoveAppDataTest extends TestCase {
 
 		(new RemoveAppData($repository, $screenshots, $appConfig, $jobList))->run($this->createMock(IOutput::class));
 
+		// The screenshot switch is the admin's privacy choice, so it survives disabling the app.
 		$this->assertSame([
 			'appstore_cards.catalogue_etag',
 			'appstore_cards.catalogue_checked_at',
-			'appstore_cards.show_screenshots',
 		], $deleted);
 	}
 }

@@ -23,11 +23,13 @@ use OCP\Migration\IRepairStep;
  * Removes the app's data. Nextcloud runs uninstall steps whenever the app is disabled, including just
  * before `occ app:remove` deletes its files. `occ app:remove --keep-data` skips this step.
  *
- * Only this app's own config keys are deleted, because Nextcloud keeps its own keys under the same
- * app ID, such as "installed_version". The refresh job is removed so that enabling the app again
- * registers it afresh, and it refills the emptied catalogue at the next cron run instead of a day
- * after its last run. The empty table stays, because only Nextcloud may change its record of
- * applied migrations, and a reinstall reuses the table.
+ * Only the catalogue's own config keys are deleted, because Nextcloud keeps its own keys under the
+ * same app ID, such as "installed_version". The screenshot switch stays: it is the admin's privacy
+ * choice, and disabling the app must not turn screenshots back on.
+ *
+ * The refresh job is removed so that enabling the app again registers it afresh, and it refills the
+ * emptied catalogue at the next cron run instead of a day after its last run. The empty table stays,
+ * because only Nextcloud may change its record of applied migrations, and a reinstall reuses it.
  *
  * @psalm-api Registered in appinfo/info.xml as an uninstall step.
  */
@@ -42,14 +44,14 @@ final class RemoveAppData implements IRepairStep {
 
 	#[\Override]
 	public function getName(): string {
-		return 'Remove the App Store catalogue, cached screenshots, settings and background job';
+		return 'Remove the App Store catalogue, cached screenshots and background job';
 	}
 
 	#[\Override]
 	public function run(IOutput $output): void {
 		$this->repository->deleteBy([]);
 		$this->screenshots->deleteAll();
-		foreach ([CatalogueRefresher::CONFIG_ETAG, CatalogueRefresher::CONFIG_CHECKED_AT, ScreenshotCache::CONFIG_ENABLED] as $key) {
+		foreach ([CatalogueRefresher::CONFIG_ETAG, CatalogueRefresher::CONFIG_CHECKED_AT] as $key) {
 			$this->appConfig->deleteKey(Application::APP_ID, $key);
 		}
 		$this->jobList->remove(RefreshCatalogueJob::class);
