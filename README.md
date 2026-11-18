@@ -13,9 +13,9 @@ Rich previews and search for Nextcloud App Store links.
 
 Paste a link to an app from the [Nextcloud App Store](https://apps.nextcloud.com) into Talk, Text or any other app with link previews, and it becomes a card with the app's details. App Store apps can also be found from unified search and inserted with the Smart Picker.
 
-![A Talk conversation in which a link to Deck shows as a card with its screenshot, summary, version, rating and categories](docs/screenshots/talk.png)
+![A link to Deck posted in Talk turns into a card with its screenshot, summary, version, rating and categories. Then, in a Text document, the Smart Picker finds Calendar and inserts its card.](docs/demo.gif)
 
-More screenshots: [Text](docs/screenshots/text.png), [Smart Picker](docs/screenshots/smart-picker.png), [unified search](docs/screenshots/unified-search.png), [dark theme](docs/screenshots/talk-dark.png) and [admin settings](docs/screenshots/admin-settings.png).
+Screenshots: [Talk](docs/screenshots/talk.png), [Text](docs/screenshots/text.png), [Smart Picker](docs/screenshots/smart-picker.png), [unified search](docs/screenshots/unified-search.png), [dark theme](docs/screenshots/talk-dark.png) and [admin settings](docs/screenshots/admin-settings.png).
 
 ## Features
 
