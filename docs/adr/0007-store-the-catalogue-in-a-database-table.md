@@ -24,11 +24,12 @@ Alternatives considered:
 
 - Keep one row per app in a table of our own, created by a migration, with only the fields the features use.
 - Store the refresh state (the App Store's ETag and the time of the last refresh) in app config.
-- Read single apps by ID and search with indexed, paginated queries.
+- Read single apps by ID through a unique index, and search with paginated queries.
 - Remove the app's data and settings in an uninstall step.
 
 ## Consequences
 
 - Lookups and search never wait for the App Store.
+- Search matches text anywhere in names and summaries, so it scans the table. That is fast at about 550 rows; a much larger catalogue would need a full-text index.
 - Schema changes need migrations that work for upgrades and downgrades.
 - The uninstall step must be tested, including reinstalling the app afterwards.

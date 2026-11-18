@@ -42,7 +42,8 @@ What a reviewer checks before approving a pull request. Not every item applies t
 ## Database and performance
 
 - Schema changes are new migrations, never edits to released ones.
-- Queries use an index, and nothing loads the whole catalogue on a request.
+- Lookups by key use an index. Queries that scan the table, such as search, are paginated and stay fast at the catalogue's size.
+- A web request loads the whole catalogue only when it has to, such as when the settings form clears every app's cached card.
 - The uninstall step still removes everything the change stores ([ADR 18](adr/0018-settings-screenshot-limits-and-removal.md)).
 
 ## Documentation and licensing

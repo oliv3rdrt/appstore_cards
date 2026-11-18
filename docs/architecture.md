@@ -110,7 +110,8 @@ Nothing else leaves the server. Browsers only talk to the Nextcloud instance.
 
 ## Performance
 
-- Previews and search are single indexed queries on a table of about 550 rows.
+- A preview is one lookup on the unique index of `app_id`.
+- Search matches names and summaries with `ILIKE '%term%'`, which scans the table because of the leading wildcard. With about 550 rows this takes well under a millisecond. It selects the matching IDs first, then loads only those entries.
 - Search results are paginated with a cursor.
 - The widget script loads only on pages that may show previews.
 - The screenshot cache has a total size limit, and images are served with long cache headers.
